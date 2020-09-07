@@ -113,6 +113,13 @@ std::string GetCommonSubstring(const std::vector<std::string>& strings)
     {
         return strings.size() < 1 ? std::string() : strings[0];
     }
+    for (const auto& string : strings)
+    {
+        if (string.empty())
+        {
+            return std::string();
+        }
+    }
 
     std::vector<size_t> encodedText;
     encodedText.reserve(GetTotalStringsLength(strings) + strings.size() + 3);
