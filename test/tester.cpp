@@ -1,6 +1,7 @@
+#include <iostream>
+#include <string>
 #include <cassert>
 #include <random>
-#include "io_tools.h"
 #include "common_substring_search.h"
 
 

@@ -1,4 +1,5 @@
-#include "io_tools.h"
+#include <iostream>
+#include <string>
 #include "common_substring_search.h"
 
 void Run()
