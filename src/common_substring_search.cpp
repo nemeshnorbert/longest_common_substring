@@ -128,10 +128,10 @@ std::string GetCommonSubstring(const std::vector<std::string>& strings)
     encodedText.push_back(0);
     encodedText.push_back(0);
 
-    auto suffixArray = StringProcessing::BuildSuffixArray(encodedText,
+    auto suffixArray = BuildSuffixArray(encodedText,
         *std::max_element(encodedText.begin(), encodedText.end()));
-    auto lcpArray = StringProcessing::BuildLcpArray(suffixArray,
-        StringProcessing::BuildRankArray(suffixArray),
+    auto lcpArray = BuildLcpArray(suffixArray,
+        BuildRankArray(suffixArray),
         encodedText);
     auto prefixTypes = GetPrefixTypes(strings);
 
@@ -155,8 +155,7 @@ std::pair<size_t, std::vector<int>> GetCommonSubstringPositions(
     std::vector<int> positions;
     for (const auto& string : strings)
     {
-        positions.push_back(StringProcessing::TryGetFirstOccurrence(string,
-            commonSubstring));
+        positions.push_back(TryGetFirstOccurrence(string, commonSubstring));
     }
 
     return std::make_pair(commonSubstring.size(), positions);

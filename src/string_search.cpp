@@ -2,74 +2,70 @@
 
 #include "string_search.h"
 
-
-namespace StringProcessing
+std::vector<size_t> BuildPrefixFunction(const std::string& text)
 {
-    std::vector<size_t> BuildPrefixFunction(const std::string& text)
+    size_t length = text.length();
+    std::vector<size_t> prefixFunc(length);
+    for (size_t position = 1; position < length; ++position)
     {
-        size_t length = text.length();
-        std::vector<size_t> prefixFunc(length);
-        for (size_t position = 1; position < length; ++position)
+        size_t rollBackPosition = prefixFunc[position - 1];
+        while (rollBackPosition > 0 &&
+            text[position] != text[rollBackPosition])
         {
-            size_t rollBackPosition = prefixFunc[position - 1];
-            while (rollBackPosition > 0 &&
-                text[position] != text[rollBackPosition])
-            {
-                rollBackPosition = prefixFunc[rollBackPosition - 1];
-            }
-            if (text[position] == text[rollBackPosition])
-            {
-                ++rollBackPosition;
-            }
-            prefixFunc[position] = rollBackPosition;
+            rollBackPosition = prefixFunc[rollBackPosition - 1];
         }
-        return prefixFunc;
-    }
-
-    std::vector<size_t> BuildZFunction(const std::string& text)
-    {
-        size_t length = text.length();
-        std::vector<size_t> zFunc(length);
-        zFunc[0] = length;
-        for (size_t position = 1, left = 0, right = 0;
-            position < length;
-            ++position)
+        if (text[position] == text[rollBackPosition])
         {
-            if (position <= right)
-            {
-                zFunc[position] = std::min(right - position + 1,
-                    zFunc[position - left]);
-            }
-            while (position + zFunc[position] < length &&
-                text[zFunc[position]] == text[position + zFunc[position]])
-            {
-                ++zFunc[position];
-            }
-            if (position + zFunc[position] - 1 > right)
-            {
-                left = position;
-                right = position + zFunc[position] - 1;
-            }
+            ++rollBackPosition;
         }
-        return zFunc;
+        prefixFunc[position] = rollBackPosition;
     }
+    return prefixFunc;
+}
 
-    int TryGetFirstOccurrence(const std::string& text, const std::string& pattern)
+std::vector<size_t> BuildZFunction(const std::string& text)
+{
+    size_t length = text.length();
+    std::vector<size_t> zFunc(length);
+    zFunc[0] = length;
+    for (size_t position = 1, left = 0, right = 0;
+        position < length;
+        ++position)
     {
-        std::string compound = pattern + text;
-        std::vector<size_t> zFunc = BuildZFunction(compound);
-        for (size_t idx = pattern.size(); idx < zFunc.size(); ++idx)
+        if (position <= right)
         {
-            if (zFunc[idx] >= pattern.size())
-            {
-                return idx - pattern.size();
-            }
+            zFunc[position] = std::min(right - position + 1,
+                zFunc[position - left]);
         }
-        return -1;
+        while (position + zFunc[position] < length &&
+            text[zFunc[position]] == text[position + zFunc[position]])
+        {
+            ++zFunc[position];
+        }
+        if (position + zFunc[position] - 1 > right)
+        {
+            left = position;
+            right = position + zFunc[position] - 1;
+        }
     }
+    return zFunc;
+}
 
-    bool IsSubstring(const std::string& text, const std::string& pattern)
+int TryGetFirstOccurrence(const std::string& text, const std::string& pattern)
+{
+    std::string compound = pattern + text;
+    std::vector<size_t> zFunc = BuildZFunction(compound);
+    for (size_t idx = pattern.size(); idx < zFunc.size(); ++idx)
     {
-        return (TryGetFirstOccurrence(text, pattern) > 0);
+        if (zFunc[idx] >= pattern.size())
+        {
+            return idx - pattern.size();
+        }
     }
+    return -1;
+}
+
+bool IsSubstring(const std::string& text, const std::string& pattern)
+{
+    return (TryGetFirstOccurrence(text, pattern) > 0);
 }

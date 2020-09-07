@@ -4,15 +4,12 @@
 #include <vector>
 #include <string>
 
-namespace StringProcessing
-{
-    std::vector<size_t> BuildPrefixFunction(const std::string& text);
+std::vector<size_t> BuildPrefixFunction(const std::string& text);
 
-    std::vector<size_t> BuildZFunction(const std::string& text);
+std::vector<size_t> BuildZFunction(const std::string& text);
 
-    int TryGetFirstOccurrence(const std::string& text, const std::string& pattern);
+int TryGetFirstOccurrence(const std::string& text, const std::string& pattern);
 
-    bool IsSubstring(const std::string& text, const std::string& pattern);
-}
+bool IsSubstring(const std::string& text, const std::string& pattern);
 
 #endif

@@ -9,9 +9,9 @@ bool Test(const std::vector<std::string>& strings, const std::string& answer)
     {
 
         stream << "Wrong answer\nfor strings: ";
-        IO::WriteValues(strings, stream);
+        WriteValues(strings, stream);
         stream << "\nThe correct answer is: ";
-        IO::WriteValue(answer, stream);
+        WriteValue(answer, stream);
         return false;
     }
     else
