@@ -16,7 +16,6 @@ std::string GetRandomString(int minLength, int maxLength)
     {
         string[index] = static_cast<char>(static_cast<int>('a') + charGenerator(engine));
     }
-    std::cout << string << '\n';
     return string;
 }
 
