@@ -1,7 +1,7 @@
-#ifndef LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_PRIORITY_QUEUE_H_
-#define LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_PRIORITY_QUEUE_H_
+#ifndef LONGEST_COMMON_SUBSTRING_PRIORITY_QUEUE_H_
+#define LONGEST_COMMON_SUBSTRING_PRIORITY_QUEUE_H_
 
-#include "PriorityStack.h"
+#include "priority_stack.h"
 
 template <typename TValue, typename TComparer = std::less<TValue>>
 class PriorityQueue
@@ -68,4 +68,4 @@ private:
     ProirityStack<TValue, TComparer> rightStack_;
 };
 
-#endif 
+#endif

@@ -1,10 +1,8 @@
-#include "stdafx.h"
-
 #include <cassert>
 
-#include "SuffixLcpArray.h"
-#include "SuffixArrayStringEncoding.h"
-#include "SuffixArrayImpl.h"
+#include "suffix_lcp_array.h"
+#include "suffix_array_string_encoding.h"
+#include "suffix_array_impl.h"
 
 namespace StringProcessing
 {
@@ -22,7 +20,7 @@ namespace StringProcessing
                 textLength, alphabetSize);
         }
         suffixArray.resize(encodedText.size() - 3);
-        return std::move(suffixArray);
+        return suffixArray;
     }
 
     std::vector<size_t> BuildRankArray(const std::vector<size_t>& suffixArray)
@@ -32,6 +30,6 @@ namespace StringProcessing
         {
             ranksArray[suffixArray[idx]] = idx;
         }
-        return std::move(ranksArray);
+        return ranksArray;
     }
 }

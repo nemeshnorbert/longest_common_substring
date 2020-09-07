@@ -1,5 +1,7 @@
-#ifndef LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_SUFFIX_ARRAY_IMPL_H_
-#define LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_SUFFIX_ARRAY_IMPL_H_
+#ifndef LONGEST_COMMON_SUBSTRING_SUFFIX_ARRAY_IMPL_H_
+#define LONGEST_COMMON_SUBSTRING_SUFFIX_ARRAY_IMPL_H_
+
+#include <cstddef>
 
 namespace StringProcessing
 {
@@ -13,12 +15,12 @@ namespace StringProcessing
         bool CompareTriple(size_t lhsFirst, size_t lhsSecond, size_t lhsThird,
             size_t rhsFirst, size_t rhsSecond, size_t rhsThird);
 
-        // stably sort source[0..length-1] to target[0..length-1] 
+        // stably sort source[0..length-1] to target[0..length-1]
         // with keys in 0..alphabetSize from ranks
         void RadixPass(const size_t* source, size_t* target, const size_t* ranks,
             size_t length, size_t alphabetSize);
 
-        // find the suffix array suffixArray of text[0 .. textLength - 1] 
+        // find the suffix array suffixArray of text[0 .. textLength - 1]
         // in alphabet {1..alphabetSize}^textLength. Algorithm requires
         // text and suffixArray be of length textLength + 3 with 3 zeros at the end
         void BuildSuffixArray(const size_t* text, size_t* suffixArray,

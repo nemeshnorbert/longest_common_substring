@@ -1,12 +1,10 @@
-#include "stdafx.h"
-
 #include <functional>
 #include <algorithm>
 
-#include "StringSearch.h"
-#include "SuffixLcpArray.h"
-#include "PriorityQueue.h"
-#include "CommonSubstringSearch.h"
+#include "string_search.h"
+#include "suffix_lcp_array.h"
+#include "priority_queue.h"
+#include "common_substring_search.h"
 
 size_t GetTotalStringsLength(const std::vector<std::string>& strings)
 {
@@ -20,19 +18,18 @@ size_t GetTotalStringsLength(const std::vector<std::string>& strings)
 
 std::vector<size_t> GetPrefixTypes(const std::vector<std::string>& strings)
 {
-    std::vector<size_t> prefixTypes;
-    prefixTypes.reserve(GetTotalStringsLength(strings) + strings.size());
+    std::vector<size_t> prefixTypes(GetTotalStringsLength(strings) + strings.size());
     size_t type = 0;
+    auto position = prefixTypes.begin();
     for (const auto& string : strings)
     {
-        for (const auto& symbol : string)
-        {
-            prefixTypes.push_back(type);
-        }
-        prefixTypes.push_back(std::numeric_limits<size_t>::max());
+        std::fill(position, position + string.size(), type);
+        position += string.size();
+        *position = std::numeric_limits<size_t>::max();
+        ++position;
         ++type;
     }
-    return std::move(prefixTypes);
+    return prefixTypes;
 }
 
 size_t GetMaximalGoodSegmentStart(const std::vector<size_t>& suffixArray,
@@ -64,7 +61,6 @@ SubstringInfo ScanSuffixArray(const std::vector<size_t>& suffixArray,
     const std::vector<size_t>& prefixTypes,
     size_t stringsCount)
 {
-    size_t textLength = suffixArray.size();
     std::vector<size_t> typeCounters(stringsCount, 0);
     PriorityQueue<size_t, std::greater<size_t>> queue_;
 
@@ -120,7 +116,7 @@ std::string GetCommonSubstring(const std::vector<std::string>& strings)
 
     std::vector<size_t> encodedText;
     encodedText.reserve(GetTotalStringsLength(strings) + strings.size() + 3);
-    for (size_t stringId = 0, symbolId = 0; stringId < strings.size(); ++stringId)
+    for (size_t stringId = 0; stringId < strings.size(); ++stringId)
     {
         for (const auto& symbol : strings[stringId])
         {
@@ -159,7 +155,7 @@ std::pair<size_t, std::vector<int>> GetCommonSubstringPositions(
     std::vector<int> positions;
     for (const auto& string : strings)
     {
-        positions.push_back(StringProcessing::TryGetFirstOccurrence(string, 
+        positions.push_back(StringProcessing::TryGetFirstOccurrence(string,
             commonSubstring));
     }
 

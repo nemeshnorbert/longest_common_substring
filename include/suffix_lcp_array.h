@@ -1,8 +1,8 @@
-#ifndef LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_SUFFIX_LCP_ARRAY_H_
-#define LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_SUFFIX_LCP_ARRAY_H_
+#ifndef LONGEST_COMMON_SUBSTRING_SUFFIX_LCP_ARRAY_H_
+#define LONGEST_COMMON_SUBSTRING_SUFFIX_LCP_ARRAY_H_
 
-#include "SuffixArrayImpl.h"
-#include "SuffixArrayStringEncoding.h"
+#include "suffix_array_impl.h"
+#include "suffix_array_string_encoding.h"
 
 namespace StringProcessing
 {
@@ -50,7 +50,7 @@ namespace StringProcessing
                 }
             }
         }
-        return std::move(lcpArray_);
+        return lcpArray_;
     }
 }
 

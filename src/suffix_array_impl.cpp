@@ -1,7 +1,5 @@
-#include "stdafx.h"
-
 #include <vector>
-#include "SuffixArrayImpl.h"
+#include "suffix_array_impl.h"
 
 namespace StringProcessing
 {
@@ -10,17 +8,16 @@ namespace StringProcessing
         bool ComparePair(size_t lhsFirst, size_t lhsSecond,
             size_t rhsFirst, size_t rhsSecond)
         {
-            return  lhsFirst < rhsFirst ||
-                lhsFirst == rhsFirst &&
-                lhsSecond <= rhsSecond;
+            return lhsFirst < rhsFirst ||
+                (lhsFirst == rhsFirst && lhsSecond <= rhsSecond);
         }
 
         bool CompareTriple(size_t lhsFirst, size_t lhsSecond, size_t lhsThird,
             size_t rhsFirst, size_t rhsSecond, size_t rhsThird)
         {
             return  lhsFirst < rhsFirst ||
-                lhsFirst == rhsFirst &&
-                ComparePair(lhsSecond, lhsThird, rhsSecond, rhsThird);
+                (lhsFirst == rhsFirst &&
+                ComparePair(lhsSecond, lhsThird, rhsSecond, rhsThird));
         }
 
         void RadixPass(const size_t* source, size_t* target, const size_t* ranks,
@@ -71,7 +68,7 @@ namespace StringProcessing
             std::vector<size_t> suffixArrayZero(lengthZero);
 
             // generate positions of mod 1 and mod  2 suffixes
-            // the "+(lengthZero - lengthOne)" adds a dummy 
+            // the "+(lengthZero - lengthOne)" adds a dummy
             // mod 1 suffix if textLength % 3 == 1
             for (size_t idx = 0, textOneTwoIdx = 0;
                 idx < textLength + (lengthZero - lengthOne);
@@ -119,7 +116,7 @@ namespace StringProcessing
             {
                 BuildSuffixArray(textOneTwo.data(), suffixArrayOneTwo.data(),
                     lengthZeroTwo, name);
-                // store unique names in textOneTwo using the suffix array 
+                // store unique names in textOneTwo using the suffix array
                 for (size_t idx = 0; idx < lengthZeroTwo; ++idx)
                 {
                     textOneTwo[suffixArrayOneTwo[idx]] = idx + 1;
@@ -134,7 +131,7 @@ namespace StringProcessing
                 }
             }
 
-            // stably sort the mod 0 suffixes from 
+            // stably sort the mod 0 suffixes from
             // suffixArrayOneTwo by their first character
             for (size_t idx = 0, textOneTwoIdx = 0; idx < lengthZeroTwo; ++idx)
             {
@@ -146,7 +143,7 @@ namespace StringProcessing
             RadixPass(textZero.data(), suffixArrayZero.data(),
                 text, lengthZero, alphabetSize);
 
-            // merge sorted suffixArrayZero suffixes 
+            // merge sorted suffixArrayZero suffixes
             // and sorted suffixArrayOneTwo suffixes
             for (size_t position = 0, oneTwoIdx = lengthZero - lengthOne, idx = 0;
                 idx < textLength;

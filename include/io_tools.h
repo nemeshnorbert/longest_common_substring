@@ -1,5 +1,5 @@
-#ifndef LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_IO_TOOLS_H_
-#define LONGEST_COMMON_SUBSTRING_OF_SEVERAL_STRINGS_IO_TOOLS_H_
+#ifndef LONGEST_COMMON_SUBSTRING_IO_TOOLS_H_
+#define LONGEST_COMMON_SUBSTRING_IO_TOOLS_H_
 
 #include <iostream>
 #include <vector>
@@ -16,7 +16,7 @@ namespace IO
     }
 
     template <typename TValue>
-    void WriteValue(const TValue& value, 
+    void WriteValue(const TValue& value,
         std::ostream& outputStream = std::cout,
         const std::string& separator = " ")
     {
@@ -47,4 +47,4 @@ namespace IO
     }
 } // namespace IO
 
-#endif 
+#endif

@@ -1,8 +1,6 @@
-#include "stdafx.h"
-
 #include <algorithm>
 
-#include "StringSearch.h"
+#include "string_search.h"
 
 
 namespace StringProcessing
@@ -25,7 +23,7 @@ namespace StringProcessing
             }
             prefixFunc[position] = rollBackPosition;
         }
-        return std::move(prefixFunc);
+        return prefixFunc;
     }
 
     std::vector<size_t> BuildZFunction(const std::string& text)
@@ -53,7 +51,7 @@ namespace StringProcessing
                 right = position + zFunc[position] - 1;
             }
         }
-        return std::move(zFunc);
+        return zFunc;
     }
 
     int TryGetFirstOccurrence(const std::string& text, const std::string& pattern)
