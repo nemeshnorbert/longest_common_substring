@@ -2,17 +2,19 @@
 #define LONGEST_COMMON_SUBSTRING_PRIORITY_STACK_H_
 
 #include <vector>
+#include <algorithm>
+#include <functional>
 
 template <typename TValue, typename TComparer = std::less<TValue>>
-class ProirityStack
+class PriorityStack
 {
 public:
-    ProirityStack() : data_(), prefixPriorityId_(), comparer_()
+    PriorityStack() : data_(), prefixPriorityId_(), comparer_()
     {}
 
-    ProirityStack(const ProirityStack<TValue, TComparer>& right)
+    PriorityStack(const PriorityStack<TValue, TComparer>& right)
         : data_(right.data_),
-        prefixPriorityId_(right.prefixPriorityId_),
+        prefixPriorityId_(right.prefix_priority_id_),
         comparer_(right.comparer_)
     {}
 
@@ -58,10 +60,10 @@ public:
         return data_[prefixPriorityId_.back()];
     }
 
-    void swap(ProirityStack<TValue, TComparer>& right)
+    void Swap(PriorityStack<TValue, TComparer>& right)
     {
         data_.swap(right.data_);
-        prefixPriorityId_.swap(right.prefixPriorityId_);
+        prefixPriorityId_.swap(right.prefix_priority_id_);
         std::swap(comparer_, right.comparer_);
     }
 
@@ -70,6 +72,5 @@ private:
     std::vector<size_t> prefixPriorityId_;
     TComparer comparer_;
 };
-
 
 #endif

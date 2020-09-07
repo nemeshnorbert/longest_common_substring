@@ -1,6 +1,7 @@
 #ifndef LONGEST_COMMON_SUBSTRING_PRIORITY_QUEUE_H_
 #define LONGEST_COMMON_SUBSTRING_PRIORITY_QUEUE_H_
 
+#include <cassert>
 #include "priority_stack.h"
 
 template <typename TValue, typename TComparer = std::less<TValue>>
@@ -44,13 +45,14 @@ public:
 
     TValue PriorityValue() const
     {
+        assert(!leftStack_.Empty() || !rightStack_.Empty());
         if (!leftStack_.Empty() && !rightStack_.Empty())
         {
             return std::max(leftStack_.PriorityValue(),
                 rightStack_.PriorityValue(),
                 TComparer());
         }
-        if (!leftStack_.Empty() && rightStack_.Empty())
+        else if (!leftStack_.Empty() && rightStack_.Empty())
         {
             return leftStack_.PriorityValue();
         }
@@ -59,13 +61,13 @@ public:
 
     void Swap(PriorityQueue<TValue, TComparer>& right)
     {
-        leftStack_.swap(right.leftStack_);
-        rightStack_.swap(right.rightStack_);
+        leftStack_.Swap(right.leftStack_);
+        rightStack_.Swap(right.rightStack_);
     }
 
 private:
-    ProirityStack<TValue, TComparer> leftStack_;
-    ProirityStack<TValue, TComparer> rightStack_;
+    PriorityStack<TValue, TComparer> leftStack_;
+    PriorityStack<TValue, TComparer> rightStack_;
 };
 
 #endif
